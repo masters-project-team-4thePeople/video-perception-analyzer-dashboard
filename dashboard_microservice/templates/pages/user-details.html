@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Users Profile</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        Users Information
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'user-Profile' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">User Name</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">DOB</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in usersInfo %}
+                <tr>
+                    <th scope="row">{{ customer.username }}</th>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.date_of_birth }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
