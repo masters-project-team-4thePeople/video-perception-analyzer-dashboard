@@ -18,7 +18,7 @@ def sign_in_page(request):
         user = User.objects.filter(username=username, password=password).first()
         if user is not None:
             context = {}
-            return render(request, 'pages/total-users-card.html', context)
+            return render(request, 'pages/dashboard.html', context)
         else:
             messages.info(request, 'Username or password is incorrect')
 
@@ -89,5 +89,4 @@ def total_users(request):
         context = {
             'userCount': userCount
         }
-        print(context)
-        return render(request, "pages/total-users-card.html", context)
+        return render(request, "pages/dashboard.html", context)
