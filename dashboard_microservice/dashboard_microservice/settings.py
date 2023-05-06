@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'dashboard',  # dashboard app
 ]
 
@@ -57,10 +58,14 @@ WSGI_APPLICATION = 'dashboard_microservice.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'vpatest',
+            'USER': 'postgres',
+            'PASSWORD': 'pgadmin123',
+            'HOST': 'localhost',
+            'PORT': '5432'
+        }
 }
 
 # Password validation
