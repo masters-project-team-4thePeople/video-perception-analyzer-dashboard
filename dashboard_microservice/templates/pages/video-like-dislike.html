@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Video Details</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        Video Like/Dislike Count
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'video-Category-likes-dislike' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Video Category</th>
+                <th scope="col">Likes</th>
+                <th scope="col">Dislikes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for videoCategory in videoCategoryTotalLike %}
+                <tr>
+                    <th scope="row">{{ videoCategory.video_category }}</th>
+                    <td>{{ videoCategory.totalLike }}</td>
+                    <td>{{ videoCategory.totalDisLike }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>User List</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        User Information
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'booking_list' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Search " aria-label="" aria-describedby="basic-addon1" style="margin-right: 10px;"
+              name="search_query" value="{{ search_query }}"/>
+
+              <input class="btn btn-success" type="submit" value="Search"/>
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Number of Bookings</th>
+                <th scope="col">Reward Points</th>
+                <th scope="col">User Level</th>
+                <th scope="col">Operation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <th scope="row">{{ customer.user }}</th>
+                    <td>{{ customer.total_bookings }}</td>
+                    <td>{{ customer.total_rewards }}</td>
+                    <td>{{ customer.user_level }}</td>
+                    <td>
+                        <a href="{% url 'delete_customer' customer.id %}">Remove</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Total Videos</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        Total Videos
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'video-count' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <div>
+      <h2>Total Videos</h2>
+      <p>{{ videoCount }}</p>
+    </div>
+
+{% endblock content %}

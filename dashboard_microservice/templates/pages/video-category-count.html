@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>video-Category-Count</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        video Category Count
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'video-Category-Count' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+ <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Video Category</th>
+                <th scope="col">Number of Video</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for videoCategory in videoCategoryCount %}
+                <tr>
+                    <th scope="row">{{ videoCategory.first_name }}</th>
+                    <td>{{ videoCategory.count }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock content %}
