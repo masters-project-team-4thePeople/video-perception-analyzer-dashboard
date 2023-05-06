@@ -60,7 +60,7 @@ WSGI_APPLICATION = 'dashboard_microservice.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'vpatest',
+            'NAME': 'testvpa',
             'USER': 'postgres',
             'PASSWORD': 'pgadmin123',
             'HOST': 'localhost',
@@ -86,8 +86,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
+
+
 
 LANGUAGE_CODE = 'en-us'
 
