@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>VPA</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        VPA
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'users-count' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+        <form action="{% url 'video-count' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+<!--    <div class="center-form" style="display: flex; justify-content: center;">-->
+<!--        <form action="{% url 'video-count' %}" method="GET" style="width: 500px;">-->
+<!--            <div class="input-group mb-3">-->
+
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+    <br>
+
+<!--    <div>-->
+<!--      <h2>Total Users</h2>-->
+<!--      <p>{{ userCount }}</p>-->
+<!--    </div>-->
+    <div class="row">
+	<div class="col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-0">
+											<h5 class="card-title">Total Users</h5>
+										</div>
+									</div>
+									<span class="h1 d-inline-block mt-1 mb-3">{{ userCount }}</span>
+
+								</div>
+							</div>
+
+						</div>
+         <div class="col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-0">
+											<h5 class="card-title">Total Videos</h5>
+										</div>
+									</div>
+									<span class="h1 d-inline-block mt-1 mb-3">{{ videoCount }}</span>
+								</div>
+							</div>
+						</div>
+    </div>
+<div class="card flex-fill">
+						<div class="card-header">
+							<div class="card-actions float-end">
+								<div class="dropdown position-relative">
+									<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="align-middle" data-feather="more-horizontal"></i>
+        </a>
+
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="#">Action</a>
+										<a class="dropdown-item" href="#">Another action</a>
+										<a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+							</div>
+							<h5 class="card-title mb-0">User Details</h5>
+						</div>
+						<table class="table table-striped my-0">
+							<thead>
+                            <tr>
+                                <th scope="col">User Name</th>
+                                <th scope="col">Email Address</th>
+                                <th scope="col">DOB</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in usersInfo %}
+                                <tr>
+                                    <td>Milo Theme</td>
+                                    <th scope="row">{{ customer.username }}</th>
+                                    <td>{{ customer.email }}</td>
+                                    <td>{{ customer.date_of_birth }}</td>
+
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        </table>
+</div>
+<div class="card flex-fill">
+						<div class="card-header">
+							<div class="card-actions float-end">
+								<div class="dropdown position-relative">
+									<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="align-middle" data-feather="more-horizontal"></i>
+        </a>
+
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="#">Action</a>
+										<a class="dropdown-item" href="#">Another action</a>
+										<a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+							</div>
+							<h5 class="card-title mb-0">Video Category</h5>
+						</div>
+						<table class="table table-striped my-0">
+							<thead>
+                            <tr>
+                                <th scope="col">Video Category</th>
+                                <th scope="col">Likes</th>
+                                <th scope="col">Dislikes</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                {% for videoCategory in videoCategoryTotalLike %}
+                                    <tr>
+                                        <th scope="row">{{ videoCategory.video_category }}</th>
+                                        <td>{{ videoCategory.totalLike }}</td>
+                                        <td>{{ videoCategory.totalDisLike }}</td>
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+</div>
+
+
+</div>
+{% endblock content %}
