@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Video Information</title>
+{% endblock title %}
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        Video Information
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'video-information' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+    <br>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">video Title</th>
+                <th scope="col">video Category</th>
+                <th scope="col">Video DUration</th>
+                <th scope="col">Likes</th>
+                <th scope="col">Dislikes</th>
+                <th scope="col">Video URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for video in videos %}
+                <tr>
+                    <th scope="row">{{ video.title }}</th>
+                    <td>{{ video.category }}</td>
+                    <td>{{ video.duration }}</td>
+                    <td>{{ video.likes }}</td>
+                    <td>{{ video.dislikes }}</td>
+                    <td><a href="{{ user.website }}">{{ video.url }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock content %}
