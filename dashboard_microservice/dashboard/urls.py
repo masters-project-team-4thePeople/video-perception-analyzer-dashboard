@@ -11,4 +11,5 @@ urlpatterns = [
     path('videoCategoryList', views.video_category_like_dislike, name='video-Category-likes-dislike'),
     path('videoCount', views.video_count, name='video-count'),
     path('userCount', views.total_users, name='users-count'),
+    path('videos', views.video_details, name='video-information'),
 ]
