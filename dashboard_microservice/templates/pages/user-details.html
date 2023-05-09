@@ -21,18 +21,19 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">User Name</th>
+                <th scope="col">UserName</th>
                 <th scope="col">Email Address</th>
                 <th scope="col">DOB</th>
+                <th scope="col">Categories</th>
             </tr>
         </thead>
         <tbody>
-            {% for customer in usersInfo %}
+            {% for user in users %}
                 <tr>
-                    <th scope="row">{{ customer.username }}</th>
-                    <td>{{ customer.email }}</td>
-                    <td>{{ customer.date_of_birth }}</td>
-
+                    <th scope="row">{{ user.username }}</th>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.birth_date }}</td>
+                    <td>{{ user.categories }}</td>
                 </tr>
             {% endfor %}
         </tbody>

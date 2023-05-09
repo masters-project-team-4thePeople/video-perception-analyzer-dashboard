@@ -29,9 +29,9 @@
         <tbody>
             {% for videoCategory in videoCategoryTotalLike %}
                 <tr>
-                    <th scope="row">{{ videoCategory.video_category }}</th>
-                    <td>{{ videoCategory.totalLike }}</td>
-                    <td>{{ videoCategory.totalDisLike }}</td>
+                    <th scope="row">{{ videoCategory.category }}</th>
+                    <td>{{ videoCategory.like }}</td>
+                    <td>{{ videoCategory.dislike }}</td>
 
                 </tr>
             {% endfor %}
