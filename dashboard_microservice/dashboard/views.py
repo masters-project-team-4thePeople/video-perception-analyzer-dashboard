@@ -1,14 +1,11 @@
+import json
+
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from dashboard.models import UserProfile, VideoMetaData
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from dashboard.serializers import UserDetailsSerializer
 from django.contrib.auth.models import User
-from django.db.models import Count
-from django.db.models import Sum
 from django.contrib import messages
-from dashboard.models import VideoDetails
+from django.http import JsonResponse
+import requests
 
 
 def sign_in_page(request):
@@ -31,60 +28,127 @@ def sign_out_page(request):
     context = {}
     return render(request, 'pages/sign_in.html', context)
 
-@login_required
-# user details
+
+# @login_required
 def user_details(request):
-    if request.method == 'GET':
-        usersInfo = User.objects.all()
-        print(usersInfo)
+    response = requests.get('http://68.183.20.147/videos-api/dashboard_users/')
+    if response.status_code == 200:
+        users = response.json()
+        user_list = []
+        for oneuser in users.values():
+            categories = []
+            for k in oneuser['categories']:
+                categories.append(k)
+            user_list.append({
+                'username': oneuser['username'],
+                'email': oneuser['email'],
+                'birth_date': oneuser['birth_date'],
+                'categories': categories
+            })
         context = {
-            'usersInfo': usersInfo
+            'users': user_list
         }
         return render(request, "pages/user-details.html", context)
+    else:
+        return JsonResponse({'error': 'Unable to retrieve data from API.'})
 
-@login_required
-# category wise video count
-def video_category_wiseCount(request):
-    if request.method == 'GET':
-        # videoInfo = VideoDetails.objects.all()
-        videoCategoryCount = VideoDetails.objects.values('video_category').annotate(count=Count('video_category'))
+
+# @login_required
+def video_details(request):
+    response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
+    if response.status_code == 200:
+        video_detail = response.json()
+        video_list = []
+        for video in video_detail.values():
+            video_list.append({
+                'title': video['video_title'],
+                'duration': video['video_duration'],
+                'category': video['video_category'],
+                'likes': video['likes'],
+                'dislikes': video['dislikes'],
+                'url': video['video_url']
+            })
         context = {
-            'videoCategoryCount': videoCategoryCount
+            'videos': video_list
         }
-        print(context)
+        return render(request, "pages/video-details.html", context)
+    else:
+        return JsonResponse({'error': 'Unable to retrieve data from API.'})
+
+
+# @login_required
+def video_category_wiseCount(request):
+    response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
+    if response.status_code == 200:
+        video_detail = response.json()
+        categories = set()
+        category_count = {}
+
+        for key in video_detail:
+            category = video_detail[key]["video_category"]
+            if category is not None:
+                categories.add(category)
+                category_count[category] = category_count.get(category, 0) + 1
+        category_count_list = []
+        for category, count in category_count.items():
+            category_count_list.append({
+                'category': category,
+                'count': count
+            })
+        context = {
+            'videoCategoryCount': category_count_list
+        }
         return render(request, "pages/video-category-count.html", context)
 
-@login_required
-# # video category and like/dislike
+
+# @login_required
 def video_category_like_dislike(request):
-    if request.method == 'GET':
-        grouped_data = VideoMetaData.objects.values('video_category').annotate(totalLike=Sum('video_likes'),
-                                                                               totalDisLike=Sum(
-                                                                                   'video_dislikes')).order_by(
-            'video_category')
-        print(grouped_data)
-        # {'video_Category': , 'totalLike': , 'totalDisLike': }
+    response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
+    if response.status_code == 200:
+        video_detail = response.json()
+        categories = set()
+        category_like_count = {}
+        category_dislike_count = {}
+
+        for key in video_detail:
+            category = video_detail[key]["video_category"]
+            if category is not None:
+                categories.add(category)
+                category_like_count[category] = category_like_count.get(category, 0) + video_detail[key]['likes']
+                category_dislike_count[category] = category_dislike_count.get(category, 0) + video_detail[key]['dislikes']
+        category_like_dislike_count = []
+        for category, count in category_like_count.items():
+            category_like_dislike_count.append({
+                'category': category,
+                'like': count,
+                'dislike': category_dislike_count[category]
+            })
+        print(category_like_dislike_count)
         context = {
-            'videoCategoryTotalLike': grouped_data
+            'videoCategoryTotalLike': category_like_dislike_count
         }
         return render(request, "pages/video-like-dislike.html", context)
 
 
-@login_required
+# @login_required
 def video_count(request):
-    if request.method == 'GET':
-        videoInfo = VideoDetails.objects.count()
-        print(videoInfo)
+    response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
+    if response.status_code == 200:
+        video_detail = response.json()
+        videoCount = len(video_detail)
+        print(videoCount)
         context = {
-            'videoCount': videoInfo
+            'videoCount': videoCount
         }
-        print(context)
         return render(request, "pages/total-videos-card.html", context)
 
-@login_required
+
+# @login_required
 def total_users(request):
-    if request.method == 'GET':
-        userCount = User.objects.count()
+    response = requests.get('http://68.183.20.147/videos-api/dashboard_users/')
+    if response.status_code == 200:
+        users = response.json()
+        userCount = len(users)
         print(userCount)
         context = {
             'userCount': userCount
