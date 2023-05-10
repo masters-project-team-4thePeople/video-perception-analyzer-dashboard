@@ -15,7 +15,7 @@ def sign_in_page(request):
         user = User.objects.filter(username=username, password=password).first()
         if user is not None:
             context = {}
-            return render(request, 'pages/dashboard.html', context)
+            return redirect('apiscall')
         else:
             messages.info(request, 'Username or password is incorrect')
 
@@ -26,10 +26,28 @@ def sign_in_page(request):
 def sign_out_page(request):
     logout(request)
     context = {}
-    return render(request, 'pages/sign_in.html', context)
+    return redirect('login')
 
 
-# @login_required
+def apis_call(request):
+    userCount = total_users(request)
+    videoCount = video_count(request)
+    user_list = user_details(request)
+    video_list = video_details(request)
+    video_category_likedislike = video_category_like_dislike(request)
+    category_wiseCount = video_category_wiseCount(request)
+    print(userCount)
+    context = {
+        'userCount': userCount,
+        'videoCount': videoCount,
+        'users': user_list,
+        'videos': video_list,
+        'videoCategoryTotalLike': video_category_likedislike,
+        'videoCategoryCount': category_wiseCount
+    }
+    return render(request, 'pages/admin_dashboard.html', context)
+
+
 def user_details(request):
     response = requests.get('http://68.183.20.147/videos-api/dashboard_users/')
     if response.status_code == 200:
@@ -48,12 +66,13 @@ def user_details(request):
         context = {
             'users': user_list
         }
-        return render(request, "pages/user-details.html", context)
+        return user_list
+        # return render(request, "pages/admin_dashboard.html", context)
     else:
         return JsonResponse({'error': 'Unable to retrieve data from API.'})
 
 
-# @login_required
+@login_required
 def video_details(request):
     response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
     if response.status_code == 200:
@@ -71,7 +90,8 @@ def video_details(request):
         context = {
             'videos': video_list
         }
-        return render(request, "pages/video-details.html", context)
+        return video_list
+        # return render(request, "pages/video-details.html", context)
     else:
         return JsonResponse({'error': 'Unable to retrieve data from API.'})
 
@@ -81,13 +101,11 @@ def video_category_wiseCount(request):
     response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
     if response.status_code == 200:
         video_detail = response.json()
-        categories = set()
         category_count = {}
 
         for key in video_detail:
             category = video_detail[key]["video_category"]
             if category is not None:
-                categories.add(category)
                 category_count[category] = category_count.get(category, 0) + 1
         category_count_list = []
         for category, count in category_count.items():
@@ -98,7 +116,8 @@ def video_category_wiseCount(request):
         context = {
             'videoCategoryCount': category_count_list
         }
-        return render(request, "pages/video-category-count.html", context)
+        return category_count_list
+        # return render(request, "pages/video-category-count.html", context)
 
 
 # @login_required
@@ -106,16 +125,15 @@ def video_category_like_dislike(request):
     response = requests.get('http://68.183.20.147/videos-api/dashboard_videos/')
     if response.status_code == 200:
         video_detail = response.json()
-        categories = set()
         category_like_count = {}
         category_dislike_count = {}
 
         for key in video_detail:
             category = video_detail[key]["video_category"]
             if category is not None:
-                categories.add(category)
                 category_like_count[category] = category_like_count.get(category, 0) + video_detail[key]['likes']
-                category_dislike_count[category] = category_dislike_count.get(category, 0) + video_detail[key]['dislikes']
+                category_dislike_count[category] = category_dislike_count.get(category, 0) + video_detail[key][
+                    'dislikes']
         category_like_dislike_count = []
         for category, count in category_like_count.items():
             category_like_dislike_count.append({
@@ -127,7 +145,8 @@ def video_category_like_dislike(request):
         context = {
             'videoCategoryTotalLike': category_like_dislike_count
         }
-        return render(request, "pages/video-like-dislike.html", context)
+        return category_like_dislike_count
+        # return render(request, "pages/video-like-dislike.html", context)
 
 
 # @login_required
@@ -140,7 +159,8 @@ def video_count(request):
         context = {
             'videoCount': videoCount
         }
-        return render(request, "pages/total-videos-card.html", context)
+        return videoCount
+        # return render(request, "pages/dashboard.html", context)
 
 
 # @login_required
@@ -153,4 +173,5 @@ def total_users(request):
         context = {
             'userCount': userCount
         }
-        return render(request, "pages/dashboard.html", context)
+        return userCount
+        # return render(request, "pages/admin_dashboard.html", context)
