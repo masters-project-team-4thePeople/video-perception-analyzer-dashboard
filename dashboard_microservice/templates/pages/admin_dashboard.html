@@ -1,0 +1,326 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>VPA - Admin Dashboard</title>
+{% endblock title %}
+
+
+{% block content %}
+    <h1 style="text-align: center; padding-top: 1em; padding-bottom: 1em;">
+        VPA - Admin Dashboard
+    </h1>
+    <!-- Search section  -->
+    <div class="center-form" style="display: flex; justify-content: center;">
+        <form action="{% url 'apiscall' %}" method="GET" style="width: 500px;">
+            <div class="input-group mb-3">
+
+            </div>
+        </form>
+    </div>
+    <br>
+
+<p>
+<a href="{% url 'logout' %}">
+  <button id="sign-out-btn" style="position: absolute; top: 10px; right: 10px;">Sign Out</button>
+
+</a>
+</p>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<!--    <div>-->
+<!--      <h2>Total Users</h2>-->
+<!--      <p>{{ userCount }}</p>-->
+<!--    </div>-->
+<body data-theme="default" data-layout="fluid" data-sidebar-position="left" data-sidebar-behavior="sticky">
+    <div class="row">
+	<div class="col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-0">
+											<h5 class="card-title">Total Users</h5>
+										</div>
+									</div>
+                                    <div>
+                                        <form action="{% url 'users-count' %}" method="GET" style="width: 500px;">
+                                            <div class="input-group mb-3">
+                                            </div>
+                                        </form>
+                                        <span class="h1 d-inline-block mt-1 mb-3">{{ userCount }}</span>
+                                    </div>
+
+
+								</div>
+							</div>
+
+						</div>
+         <div class="col-md-6 col-xxl-3 d-flex">
+							<div class="card flex-fill">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-0">
+											<h5 class="card-title">Total Videos</h5>
+										</div>
+									</div>
+									<span class="h1 d-inline-block mt-1 mb-3">{{ videoCount }}</span>
+								</div>
+							</div>
+						</div>
+    </div>
+
+       <div class="row">
+        <div class="col-md-6">
+<div class="card flex-fill">
+						<div class="card-header">
+							<div class="card-actions float-end">
+								<div class="dropdown position-relative">
+									<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="align-middle" data-feather="more-horizontal"></i>
+        </a>
+
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="#">Action</a>
+										<a class="dropdown-item" href="#">Another action</a>
+										<a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+							</div>
+							<h5 class="card-title mb-0">Video Category</h5>
+						</div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Video Category</th>
+                                    <th scope="col">Number of Video</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for videoCategory in videoCategoryCount %}
+                                    <tr>
+                                        <th scope="row">{{ videoCategory.category }}</th>
+                                        <td>{{ videoCategory.count }}</td>
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+</div>
+        </div>
+<div class="col-md-6">
+ <div class="card flex-fill">
+						<div class="card-header">
+							<div class="card-actions float-end">
+								<div class="dropdown position-relative">
+									<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="align-middle" data-feather="more-horizontal"></i>
+        </a>
+
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="#">Action</a>
+										<a class="dropdown-item" href="#">Another action</a>
+										<a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+							</div>
+							<h5 class="card-title mb-0">Video Like/Dislike Count</h5>
+						</div>
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Video Category</th>
+                <th scope="col">Likes</th>
+                <th scope="col">Dislikes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for videoCategory in videoCategoryTotalLike %}
+                <tr>
+                    <th scope="row">{{ videoCategory.category }}</th>
+                    <td>{{ videoCategory.like }}</td>
+                    <td>{{ videoCategory.dislike }}</td>
+
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+</div>
+
+
+<div class="card flex-fill">
+						<div class="card-header">
+							<div class="card-actions float-end">
+								<div class="dropdown position-relative">
+									<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="align-middle" data-feather="more-horizontal"></i>
+        </a>
+
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="#">Action</a>
+										<a class="dropdown-item" href="#">Another action</a>
+										<a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+							</div>
+							<h5 class="card-title mb-0">Video Category</h5>
+						</div>
+                            <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">video Title</th>
+                                            <th scope="col">video Category</th>
+                                            <th scope="col">Video DUration</th>
+                                            <th scope="col">Likes</th>
+                                            <th scope="col">Dislikes</th>
+<!--                                            <th scope="col">Video URL</th>-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for video in videos %}
+                                            <tr>
+                                                <th scope="row">{{ video.title }}</th>
+                                                <td>{{ video.category }}</td>
+                                                <td>{{ video.duration }}</td>
+                                                <td>{{ video.likes }}</td>
+                                                <td>{{ video.dislikes }}</td>
+<!--                                                <td><a href="{{ user.website }}">{{ video.url }}</a></td>-->
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+</div>
+    <div class="card flex-fill">
+						<div class="card-header">
+							<div class="card-actions float-end">
+								<div class="dropdown position-relative">
+									<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+          <i class="align-middle" data-feather="more-horizontal"></i>
+        </a>
+
+									<div class="dropdown-menu dropdown-menu-end">
+										<a class="dropdown-item" href="#">Action</a>
+										<a class="dropdown-item" href="#">Another action</a>
+										<a class="dropdown-item" href="#">Something else here</a>
+									</div>
+								</div>
+							</div>
+							<h5 class="card-title mb-0">User Details</h5>
+						</div>
+						<table class="table table-striped my-0">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">UserName</th>
+                                        <th scope="col">Email Address</th>
+                                        <th scope="col">DOB</th>
+<!--                                        <th scope="col">Categories</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <th scope="row">{{ user.username }}</th>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.birth_date }}</td>
+<!--                                            <td>{{ user.categories }}</td>-->
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+</div>
+
+
+
+
+<!--					<div class="row">-->
+<!--						<div class="col-12 col-lg-8 d-flex">-->
+<!--							<div class="card flex-fill w-100">-->
+<!--								<div class="card-header">-->
+<!--									<div class="card-actions float-end">-->
+<!--										<div class="dropdown position-relative">-->
+<!--											<a href="#" data-bs-toggle="dropdown" data-bs-display="static">-->
+<!--              <i class="align-middle" data-feather="more-horizontal"></i>-->
+<!--            </a>-->
+
+<!--											<div class="dropdown-menu dropdown-menu-end">-->
+<!--												<a class="dropdown-item" href="#">Action</a>-->
+<!--												<a class="dropdown-item" href="#">Another action</a>-->
+<!--												<a class="dropdown-item" href="#">Something else here</a>-->
+<!--											</div>-->
+<!--										</div>-->
+<!--									</div>-->
+<!--									<h5 class="card-title mb-0">Sales / Revenue</h5>-->
+<!--								</div>-->
+<!--								<div class="card-body d-flex w-100">-->
+<!--									<div class="align-self-center chart chart-lg">-->
+<!--										<canvas id="myChart"></canvas>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+
+</div>
+
+<script>
+
+  function fetchData() {
+  return fetch('/videoCategoryCount')
+    .then(response => response.json())
+    .then(data => data.map(item => ({ x: item.category, y: item.count })));
+}
+
+  function createBarChart() {
+  // Get the canvas element
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  // Fetch the data from the API
+  fetchData().then(data => {
+    // Create the chart
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        datasets: [{
+          label: 'Sales',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1,
+          data: data
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              unit: 'month'
+            },
+            ticks: {
+              source: 'auto'
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        }
+      }
+    });
+  });
+}
+
+
+  // Call the function to create the chart
+  createBarChart();
+</script>
+
+
+
+</body>
+{% endblock content %}
