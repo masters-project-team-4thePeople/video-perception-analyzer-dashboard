@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('login/', views.sign_in_page, name='login'),
     path('logout', views.sign_out_page, name='logout'),
+    path('apiscall', views.apis_call, name='apiscall'),
     path('users', views.user_details, name='user-Profile'),
     path('videoCategoryCount', views.video_category_wiseCount, name='video-Category-Count'),
     path('videoCategoryList', views.video_category_like_dislike, name='video-Category-likes-dislike'),
