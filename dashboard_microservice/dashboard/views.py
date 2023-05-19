@@ -13,12 +13,14 @@ def sign_in_page(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        user = User.objects.filter(username=username, password=password).first()
-        if user is not None:
-            return redirect('apiscall')
-        else:
-            messages.info(request, 'Username or password is incorrect')
-
+        users = requests.get('http://165.22.179.123/videos-api/dashboard_users/')
+        users = users.json()
+        for oneuser in users.values():
+            print(oneuser)
+            print(oneuser['username'] )
+            if oneuser['username'] == username:
+                return redirect('apiscall')
+        messages.info(request, 'Username or password is incorrect')
     context = {}
     return render(request, 'pages/sign_in.html', context)
 
@@ -77,7 +79,6 @@ def video_details(request):
         video_list = []
 
         for video in video_detail.values():
-            print(video)
             if video['video_category'] is not None:
                 key, value = next(iter(video['video_category'].items()))
                 video_list.append({
@@ -110,7 +111,6 @@ def video_category_wiseCount(request):
                 key, value = next(iter(category_key.items()))
                 category_count[value] = category_count.get(value, 0) + 1
         category_count_list = []
-        # print(category_count)
         for category, count in category_count.items():
             category_count_list.append({
                 'category': category,
@@ -159,7 +159,6 @@ def video_count(request):
     if response.status_code == 200:
         video_detail = response.json()
         videoCount = len(video_detail)
-        # print(videoCount)
         context = {
             'videoCount': videoCount
         }
