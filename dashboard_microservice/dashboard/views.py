@@ -47,7 +47,7 @@ def apis_call(request):
 
 
 def user_details(request):
-    response = requests.get('http://157.230.221.59/videos-api/dashboard_users/')
+    response = requests.get('http://165.22.179.123/videos-api/dashboard_users/')
     if response.status_code == 200:
         users = response.json()
         user_list = []
@@ -71,7 +71,7 @@ def user_details(request):
 
 
 def video_details(request):
-    response = requests.get('http://157.230.221.59/videos-api/dashboard_videos/')
+    response = requests.get('http://165.22.179.123/videos-api/dashboard_videos/')
     if response.status_code == 200:
         video_detail = response.json()
         video_list = []
@@ -99,7 +99,7 @@ def video_details(request):
 
 # @login_required
 def video_category_wiseCount(request):
-    response = requests.get('http://157.230.221.59/videos-api/dashboard_videos/')
+    response = requests.get('http://165.22.179.123/videos-api/dashboard_videos/')
     if response.status_code == 200:
         video_detail = response.json()
         category_count = {}
@@ -125,7 +125,7 @@ def video_category_wiseCount(request):
 
 # @login_required
 def video_category_like_dislike(request):
-    response = requests.get('http://157.230.221.59/videos-api/dashboard_videos/')
+    response = requests.get('http://165.22.179.123/videos-api/dashboard_videos/')
     if response.status_code == 200:
         video_detail = response.json()
         category_like_count = {}
@@ -155,7 +155,7 @@ def video_category_like_dislike(request):
 
 # @login_required
 def video_count(request):
-    response = requests.get('http://157.230.221.59/videos-api/dashboard_videos/')
+    response = requests.get('http://165.22.179.123/videos-api/dashboard_videos/')
     if response.status_code == 200:
         video_detail = response.json()
         videoCount = len(video_detail)
@@ -169,7 +169,7 @@ def video_count(request):
 
 # @login_required
 def total_users(request):
-    response = requests.get('http://157.230.221.59/videos-api/dashboard_users/')
+    response = requests.get('http://165.22.179.123/videos-api/dashboard_users/')
     if response.status_code == 200:
         users = response.json()
         userCount = len(users)
