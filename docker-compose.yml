@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    container_name: masters_project_django_server
+    build:
+      context: ./dashboard_microservice
+      dockerfile: Dockerfile
+    command: gunicorn dashboard_microservice.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    expose:
+      - 8000
+    depends_on:
+      - postgres_database
+  postgres_database:
+    container_name: masters_project_database_server
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data_volume:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=dummypassword
+      - POSTGRES_DB=masters_project_dashboard
+    ports:
+      - "5432:5432"
+  nginx:
+    container_name: masters_project_nginx_server
+    build: ./nginx
+    volumes:
+      - static_volume:/home/app/web/staticfiles
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+volumes:
+  postgres_data_volume:
+  static_volume:

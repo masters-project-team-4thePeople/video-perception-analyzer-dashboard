@@ -4,6 +4,7 @@ from django.contrib.auth import views as auth_views
 
 
 urlpatterns = [
+    path('', views.sign_in_page, name='login_page'),
     path('login/', views.sign_in_page, name='login'),
     path('logout', views.sign_out_page, name='logout'),
     path('apiscall', views.apis_call, name='apiscall'),

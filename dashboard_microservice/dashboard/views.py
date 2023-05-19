@@ -17,7 +17,7 @@ def sign_in_page(request):
         users = users.json()
         for oneuser in users.values():
             print(oneuser)
-            print(oneuser['username'] )
+            print(oneuser['username'])
             if oneuser['username'] == username:
                 return redirect('apiscall')
         messages.info(request, 'Username or password is incorrect')
@@ -85,8 +85,8 @@ def video_details(request):
                     'title': video['video_title'],
                     'duration': video['video_duration'],
                     'category': value,
-                    'likes': randrange(1, 5+1) ,
-                    'dislikes': randrange(1, 5+1),
+                    'likes': randrange(1, 5 + 1),
+                    'dislikes': randrange(1, 5 + 1),
                     'url': video['video_url']
                 })
         context = {
@@ -142,8 +142,8 @@ def video_category_like_dislike(request):
         for category, count in category_like_count.items():
             category_like_dislike_count.append({
                 'category': category,
-                'like': randrange(15, 23+1),
-                'dislike': randrange(10, 13+1)
+                'like': randrange(15, 23 + 1),
+                'dislike': randrange(10, 13 + 1)
             })
         print(category_like_dislike_count)
         context = {

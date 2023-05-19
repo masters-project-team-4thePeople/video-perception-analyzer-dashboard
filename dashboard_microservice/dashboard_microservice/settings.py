@@ -3,12 +3,11 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-9jy&^yti@b)4jk7@gt9xt@4n%wscc-lkqw#2m%_cz-r&(7rd3e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -19,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
+    'rest_framework', # rest framework
     'dashboard',  # dashboard app
 ]
 
@@ -58,14 +57,14 @@ WSGI_APPLICATION = 'dashboard_microservice.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'testvpa',
-            'USER': 'postgres',
-            'PASSWORD': 'pgadmin123',
-            'HOST': 'localhost',
-            'PORT': '5432'
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres',
+        'NAME': 'masters_project_dashboard',  # add your local username here
+        'PASSWORD': 'dummypassword',  # add your local db password here
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
 }
 
 # Password validation
@@ -86,15 +85,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
-
-
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -110,5 +103,4 @@ MEDIA_URL = '/media/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
